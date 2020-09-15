@@ -179,8 +179,8 @@ Combine with the following modules to get a complete infrastructure defined by Y
 - [Databases](https://registry.terraform.io/modules/TaitoUnited/databases/google)
 - [Storage](https://registry.terraform.io/modules/TaitoUnited/storage/google)
 - [Monitoring](https://registry.terraform.io/modules/TaitoUnited/monitoring/google)
-- [PostgreSQL users](https://registry.terraform.io/modules/TaitoUnited/postgresql-users/google)
-- [MySQL users](https://registry.terraform.io/modules/TaitoUnited/mysql-users/google)
+- [PostgreSQL privileges](https://registry.terraform.io/modules/TaitoUnited/postgresql-privileges/google)
+- [MySQL privileges](https://registry.terraform.io/modules/TaitoUnited/mysql-privileges/google)
 
 TIP: Similar modules are also available for AWS, Azure, and DigitalOcean. All modules are used by [infrastructure templates](https://taitounited.github.io/taito-cli/templates#infrastructure-templates) of [Taito CLI](https://taitounited.github.io/taito-cli/).
 
