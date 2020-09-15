@@ -22,12 +22,12 @@ locals {
 
   kubernetes_master_cidr   = "172.16.0.0/28"
 
-  kubernetes = var.kubernetes
-  permissions = var.permissions
-  postgresqlClusters = var.postgresql_clusters
-  mysqlClusters = var.mysql_clusters
+  kubernetes               = var.kubernetes
+  permissions              = var.permissions
+  postgresqlClusterNames   = var.postgresql_cluster_names
+  mysqlClusterNames        = var.mysql_cluster_names
 
-  helmEnabled = var.helm_enabled && local.kubernetes != null
+  helmEnabled              = var.helm_enabled && local.kubernetes != null
 
   nodePools = try(
     local.kubernetes.nodePools != null

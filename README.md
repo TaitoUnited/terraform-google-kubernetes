@@ -1,19 +1,37 @@
-# Google Cloud DNS
+# Google Cloud Kubernetes
 
 Example usage:
 
 ```
 provider "google" {
-  project = "my-infrastructure"
-  region  = "europe-west1"
-  zone    = "europe-west1b"
+  project      = "my-infrastructure"
+  region       = "europe-west1"
+  zone         = "europe-west1b"
 }
 
+# Enable Google APIs
+
 resource "google_project_service" "compute" {
-  service                    = "compute.googleapis.com"
-  disable_dependent_services = true
-  disable_on_destroy         = false
+  service      = "compute.googleapis.com"
 }
+
+resource "google_project_service" "cloudkms" {
+  service      = "cloudkms.googleapis.com"
+}
+
+resource "google_project_service" "container" {
+  service      = "container.googleapis.com"
+}
+
+resource "google_project_service" "containerregistry" {
+  service      = "containerregistry.googleapis.com"
+}
+
+resource "google_project_service" "cloudbuild" {
+  service      = "cloudbuild.googleapis.com"
+}
+
+# CI/CD tester service account
 
 resource "google_service_account" "cicd_tester" {
   depends_on   = [google_project_service.compute]
@@ -21,11 +39,19 @@ resource "google_service_account" "cicd_tester" {
   display_name = "cicd-tester"
 }
 
+# Kubernetes
+
 module "kubernetes" {
-  source       = "TaitoUnited/kubernetes/google"
-  version      = "1.0.0"
-  providers    = [ google ]
-  depends_on   = [ google_project_service.compute ]
+  source              = "TaitoUnited/kubernetes/google"
+  version             = "1.0.0"
+  providers           = [ google ]
+  depends_on          = [
+    google_project_service.compute,
+    google_project_service.cloudkms,
+    google_project_service.container,
+    google_project_service.containerregistry,
+    google_project_service.cloudbuild,
+  ]
 
   # Settings
   helm_enabled        = false  # Should be false on the first run, then true
@@ -37,15 +63,15 @@ module "kubernetes" {
   pods_range_name     = module.network.pods_range_name
   services_range_name = module.network.services_range_name
 
+  # Permissions
+  permissions         = yamldecode(file("${path.root}/../infra.yaml"))["permissions"]
+
   # Kubernetes
   kubernetes          = yamldecode(file("${path.root}/../infra.yaml"))["kubernetes"]
 
   # Database clusters (for db proxies)
-  postgresql_clusters = yamldecode(file("${path.root}/../infra.yaml"))["postgresqlClusters"]
-  mysql_clusters      = yamldecode(file("${path.root}/../infra.yaml"))["mysqlClusters"]
-
-  # Permissions
-  permissions         = yamldecode(file("${path.root}/../infra.yaml"))["permissions"]["kubernetes"]
+  postgresql_clusters = module.database.postgresql_clusters
+  mysql_clusters      = module.database.mysql_clusters
 
   # Service accounts (for permissions)
   global_cicd_deploy_service_account = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
@@ -57,22 +83,24 @@ Example YAML:
 
 ```
 permissions:
-  kubernetes:
-    cluster:
-      'taito:iam-admin':
-        - group:devops@mydomain.com
-      'taito:status-viewer':
-        - group:staff@mydomain.com
-    namespaces:
-      db-proxy:
-        'taito:pod-portforwarder':
-          - user:jane.external@anotherdomain.com
-      my-namespace:
-        'taito:status-viewer':
-          - user:jane.external@anotherdomain.com
-      another-namespace:
-        'taito:developer':
-          - user:jane.external@anotherdomain.com
+  clusterRoles:
+    - name: taito:iam-admin
+      subjects: [ "group:devops@mydomain.com" ]
+    - name: taito:status-viewer
+      subjects: [ "group:staff@mydomain.com" ]
+  namespaces:
+    - name: db-proxy
+      clusterRoles:
+        - name: taito:pod-portforwarder
+          subjects: [ "user:jane.external@anotherdomain.com" ]
+    - name: my-namespace
+      clusterRoles:
+        - taito:status-viewer
+          subjects: [ "user:jane.external@anotherdomain.com" ]
+    - name: another-namespace
+      clusterRoles:
+        - taito:developer
+          subjects: [ "user:jane.external@anotherdomain.com" ]
 
 # For Kubernetes setting descriptions, see
 # https://registry.terraform.io/modules/terraform-google-modules/kubernetes-engine/google/

@@ -62,23 +62,104 @@ variable "global_cicd_testing_service_account" {
 }
 
 variable "kubernetes" {
-  type        = any
+  type = object({
+    name = string
+    context = string
+    releaseChannel = string
+    maintenanceStartTime = string
+    registryProjectId = string
+    authenticatorSecurityGroup = string
+    rbacSecurityGroup = string
+    clusterFirewallRulesEnabled = bool
+    masterPrivateEndpointEnabled = bool
+    masterGlobalAccessEnabled = bool
+    privateNodesEnabled = bool
+    shieldedNodesEnabled = bool
+    networkPolicyEnabled = bool
+    dbEncryptionEnabled = bool
+    podSecurityPolicyEnabled = bool
+    verticalPodAutoscalingEnabled = bool
+    dnsCacheEnabled = bool
+    pdCsiDriverEnabled = bool
+    resourceConsumptionExportEnabled = bool
+    resourceConsumptionExportDatasetId = string
+    networkEgressExportEnabled = bool
+    binaryAuthorizationEnabled = bool
+    intranodeVisibilityEnabled = bool
+    configConnectorEnabled = bool
+    region = string
+    zones = list(string)
+    masterAuthorizedNetworks = list(string)
+    nodePools = list(object({
+      name = string
+      machineType = string
+      acceleratorType = string
+      acceleratorCount = number
+      secureBootEnabled = bool
+      diskSizeGb = number
+      locations = string
+      minNodeCount = number
+      maxNodeCount = number
+    }))
+    nginxIngressControllers = list(object({
+      class = string
+      replicas = number
+      metricsEnabled = bool
+      maxmindLicenseKey = string
+      configmap = map(string)
+      tcpServices = map(string)
+      udpServices = map(string)
+    }))
+    certManager = object({
+      enabled = bool
+    })
+    istio = object({
+      enabled = bool
+    })
+    knative = object({
+      enabled = bool
+    })
+    falco = object({
+      enabled = bool
+    })
+    jaeger = object({
+      enabled = bool
+    })
+    sentry = object({
+      enabled = bool
+    })
+    jenkinsx = object({
+      enabled = bool
+    })
+  })
   description = "Resources as JSON (see README.md). You can read values from a YAML file with yamldecode()."
 }
 
 variable "permissions" {
-  type        = any
+  type = object({
+    clusterRoles = list(object({
+      name = string
+      subjects = list(string)
+    }))
+    namespaces = list(object({
+      name = string
+      clusterRoles = list(object({
+        name = string
+        subjects = list(string)
+      }))
+    }))
+  })
   description = "Resources as JSON (see README.md). You can read values from a YAML file with yamldecode()."
 }
 
-variable "postgresql_clusters" {
-  type        = list
+variable "postgresql_cluster_names" {
+  type        = list(string)
   default     = []
   description = "Resources as JSON (see README.md). You can read values from a YAML file with yamldecode()."
 }
 
-variable "mysql_clusters" {
-  type        = list
+variable "mysql_cluster_names" {
+  type        = list(string)
   default     = []
   description = "Resources as JSON (see README.md). You can read values from a YAML file with yamldecode()."
 }

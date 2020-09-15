@@ -15,20 +15,20 @@
  */
 
 data "google_sql_database_instance" "postgresql" {
-  count      = local.helmEnabled ? length(local.postgresqlClusters) : 0
-  name       = local.postgresqlClusters[count.index].name
+  count      = local.helmEnabled ? length(local.postgresqlClusterNames) : 0
+  name       = local.postgresqlClusterNames[count.index]
 }
 
 data "google_sql_database_instance" "mysql" {
-  count      = local.helmEnabled ? length(local.mysqlClusters) : 0
-  name       = local.mysqlClusters[count.index].name
+  count      = local.helmEnabled ? length(local.mysqlClusterNames) : 0
+  name       = local.mysqlClusterNames[count.index]
 }
 
 resource "helm_release" "postgres_proxy" {
   depends_on = [module.kubernetes, module.helm_apps]
 
-  count      = local.helmEnabled ? length(local.postgresqlClusters) : 0
-  name       = local.postgresqlClusters[count.index].name
+  count      = local.helmEnabled ? length(local.postgresqlClusterNames) : 0
+  name       = local.postgresqlClusterNames[count.index]
   namespace  = "db-proxy"
   repository = "https://kubernetes-charts.storage.googleapis.com/"
   chart      = "socat-tunneller"
@@ -49,8 +49,8 @@ resource "helm_release" "postgres_proxy" {
 resource "helm_release" "mysql_proxy" {
   depends_on = [module.kubernetes, helm_release.postgres_proxy]
 
-  count      = local.helmEnabled ? length(local.mysqlClusters) : 0
-  name       = local.mysqlClusters[count.index].name
+  count      = local.helmEnabled ? length(local.mysqlClusterNames) : 0
+  name       = local.mysqlClusterNames[count.index]
   namespace  = "db-proxy"
   repository = "https://kubernetes-charts.storage.googleapis.com/"
   chart      = "socat-tunneller"

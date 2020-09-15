@@ -32,7 +32,7 @@ resource "helm_release" "kubernetes" {
 
   set {
     name     = "permissions"
-    value    = local.permissions
+    value    = yamlencode(local.permissions)
   }
 
   set {
