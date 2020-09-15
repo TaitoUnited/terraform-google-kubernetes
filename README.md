@@ -95,11 +95,11 @@ permissions:
           subjects: [ "user:jane.external@anotherdomain.com" ]
     - name: my-namespace
       clusterRoles:
-        - taito:status-viewer
+        - name: taito:status-viewer
           subjects: [ "user:jane.external@anotherdomain.com" ]
     - name: another-namespace
       clusterRoles:
-        - taito:developer
+        - name: taito:developer
           subjects: [ "user:jane.external@anotherdomain.com" ]
 
 # For Kubernetes setting descriptions, see
