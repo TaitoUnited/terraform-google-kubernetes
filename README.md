@@ -57,14 +57,15 @@ module "kubernetes" {
   kubernetes          = yamldecode(file("${path.root}/../infra.yaml"))["kubernetes"]
 
   # Database clusters (for db proxies)
-  postgresql_clusters = module.database.postgresql_clusters
-  mysql_clusters      = module.database.mysql_clusters
+  postgresql_cluster_names = [ "my-postgresql-1" ]
+  mysql_cluster_names      = [ "my-mysql-1" ]
 }
 ```
 
 Example YAML:
 
 ```
+# Permissions
 permissions:
   clusterRoles:
     - name: taito-iam-admin
@@ -116,6 +117,8 @@ kubernetes:
   # zones: # NOTE: Provide zones only if kubernes is ZONAL instead of REGIONAL
   masterAuthorizedNetworks:
     - 0.0.0.0/0
+
+  # Node pools
   nodePools:
     - name: pool-1
       machineType: n1-standard-1
@@ -137,6 +140,7 @@ kubernetes:
       # NOTE: On Google Cloud total number of nodes = node_count * num_of_zones
       minNodeCount: 1
       maxNodeCount: 1
+
   # Ingress controllers
   nginxIngressControllers:
     - class: nginx
@@ -161,14 +165,17 @@ kubernetes:
         3000: my-namespace/my-tcp-service:9000
       udpServices:
         3001: my-namespace/my-udp-service:9001
+
   # Certificate managers
   certManager:
     enabled: false
+
   # Platforms
   istio:
     enabled: false
   knative:         # Using Google Cloud Run
     enabled: false
+
   # Logging, monitoring, and tracing
   falco:
     enabled: false # NOTE: Not supported yet
@@ -176,6 +183,7 @@ kubernetes:
     enabled: false # NOTE: Not supported yet
   sentry:
     enabled: false # NOTE: Not supported yet
+
   # CI/CD
   jenkinsx:
     enabled: false # NOTE: Not supported yet

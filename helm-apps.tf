@@ -16,7 +16,7 @@
 
 module "helm_apps" {
   source                      = "TaitoUnited/infrastructure-apps/helm"
-  version                     = "1.1.1"
+  version                     = local.helm_apps_version
 
   depends_on                  = [module.kubernetes]
   count                       = local.helmEnabled ? 1 : 0

@@ -15,10 +15,9 @@
  */
 
 locals {
-  nginx_ingress_version    = "2.16.0"
-  cert_manager_version     = "1.0.1"
-  socat_tunneler_version   = "0.1.0"
+  helm_apps_version        = "1.2.0"
   kubernetes_admin_version = "1.1.0"
+  socat_tunneler_version   = "0.1.0"
 
   kubernetes_master_cidr   = "172.16.0.0/28"
 
