@@ -27,18 +27,6 @@ resource "google_project_service" "containerregistry" {
   service      = "containerregistry.googleapis.com"
 }
 
-resource "google_project_service" "cloudbuild" {
-  service      = "cloudbuild.googleapis.com"
-}
-
-# CI/CD tester service account
-
-resource "google_service_account" "cicd_tester" {
-  depends_on   = [google_project_service.compute]
-  account_id   = "cicd-tester"
-  display_name = "cicd-tester"
-}
-
 # Kubernetes
 
 module "kubernetes" {
@@ -50,7 +38,6 @@ module "kubernetes" {
     google_project_service.cloudkms,
     google_project_service.container,
     google_project_service.containerregistry,
-    google_project_service.cloudbuild,
   ]
 
   # Settings
@@ -72,10 +59,6 @@ module "kubernetes" {
   # Database clusters (for db proxies)
   postgresql_clusters = module.database.postgresql_clusters
   mysql_clusters      = module.database.mysql_clusters
-
-  # Service accounts (for permissions)
-  global_cicd_deploy_service_account = "serviceAccount:${data.google_project.project.number}@cloudbuild.gserviceaccount.com"
-  global_cicd_testing_service_account = "serviceAccount:${google_service_account.cicd_tester.email}"
 }
 ```
 

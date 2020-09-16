@@ -36,16 +36,6 @@ resource "helm_release" "kubernetes" {
   }
 
   set {
-    name     = "cicd.deployServiceAccount"
-    value    = var.global_cicd_deploy_service_account
-  }
-
-  set {
-    name     = "cicd.testingServiceAccount"
-    value    = var.global_cicd_testing_service_account
-  }
-
-  set {
     name     = "dbProxyNamespace"
     value    = "db-proxy"
   }

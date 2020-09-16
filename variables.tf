@@ -49,18 +49,6 @@ variable "services_range_name" {
   description = "Kubernetes ip range services"
 }
 
-variable "global_cicd_deploy_service_account" {
-  type        = string
-  default     = ""
-  description = "Global CI/CD deploy service account (e.g. cloud build). The service account is given deploy privileges to ALL Kubernetes namespaces. Leave empty if you want to create namespace specific CI/CD service accounts instead."
-}
-
-variable "global_cicd_testing_service_account" {
-  type        = string
-  default     = ""
-  description = "Global CI/CD testing service account. The service account is given secret read privileges to ALL Kubernetes namespaces. Leave empty if you want to create namespace specific CI/CD service accounts instead."
-}
-
 variable "kubernetes" {
   type = object({
     name = string
