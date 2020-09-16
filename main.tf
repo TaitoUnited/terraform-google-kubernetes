@@ -15,9 +15,9 @@
  */
 
 locals {
-  helm_apps_version        = "1.2.0"
   kubernetes_admin_version = "1.1.0"
   socat_tunneler_version   = "0.1.0"
+  # NOTE: Remember to update also helm_apps_version in helm-apps.tf
 
   kubernetes_master_cidr   = "172.16.0.0/28"
 
