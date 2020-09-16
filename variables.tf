@@ -37,13 +37,13 @@ variable "subnetwork" {
   description = "Kubernetes subnetwork"
 }
 
-variable "pods_range_name" {
+variable "pods_ip_range_name" {
   type        = string
   default     = ""
   description = "Kubernetes ip range pods"
 }
 
-variable "services_range_name" {
+variable "services_ip_range_name" {
   type        = string
   default     = ""
   description = "Kubernetes ip range services"

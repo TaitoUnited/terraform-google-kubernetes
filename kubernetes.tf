@@ -25,8 +25,8 @@ module "kubernetes" {
   zones                          = local.kubernetes.zones
   network                        = var.network
   subnetwork                     = var.subnetwork
-  ip_range_pods                  = var.pods_range_name
-  ip_range_services              = var.services_range_name
+  ip_range_pods                  = var.pods_ip_range_name
+  ip_range_services              = var.services_ip_range_name
   # compute_engine_service_account = var.compute_engine_service_account
   master_ipv4_cidr_block         = local.kubernetes_master_cidr
 
