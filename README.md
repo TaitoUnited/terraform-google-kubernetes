@@ -101,20 +101,20 @@ kubernetes:
   masterGlobalAccessEnabled: true
   privateNodesEnabled: true
   shieldedNodesEnabled: true
-  networkPolicyEnabled: true
-  dbEncryptionEnabled: true
-  podSecurityPolicyEnabled: true
+  networkPolicyEnabled: false
+  dbEncryptionEnabled: false
+  podSecurityPolicyEnabled: false
   verticalPodAutoscalingEnabled: true
   dnsCacheEnabled: true
   pdCsiDriverEnabled: true
-  resourceConsumptionExportEnabled: true
+  resourceConsumptionExportEnabled: false
   resourceConsumptionExportDatasetId:
   networkEgressExportEnabled: false
   binaryAuthorizationEnabled: false
   intranodeVisibilityEnabled: false
   configConnectorEnabled: false
   region: europe-west1
-  # zones: # NOTE: Provide zones only if kubernes is ZONAL instead of REGIONAL
+  # zones: # NOTE: Provide zones only if kubernetes is ZONAL instead of REGIONAL
   masterAuthorizedNetworks:
     - 0.0.0.0/0
 
@@ -126,7 +126,7 @@ kubernetes:
       acceleratorCount: 0
       secureBootEnabled: true
       diskSizeGb: 100
-      locations: # Leave empty or specify zones: us-central1-b,us-central1-c
+      locations: # Leave empty or specify zones, example: europe-west1-b,europe-west1-c
       # NOTE: On Google Cloud total number of nodes = node_count * num_of_zones
       minNodeCount: 1
       maxNodeCount: 1
@@ -168,13 +168,13 @@ kubernetes:
 
   # Certificate managers
   certManager:
-    enabled: false
+    enabled: true
 
   # Platforms
   istio:
     enabled: false
-  knative:         # Using Google Cloud Run
-    enabled: false
+  knative:
+    enabled: false # Using Google Cloud Run
 
   # Logging, monitoring, and tracing
   falco:
