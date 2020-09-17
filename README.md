@@ -114,7 +114,8 @@ kubernetes:
   intranodeVisibilityEnabled: false
   configConnectorEnabled: false
   region: europe-west1
-  # zones: # NOTE: Provide zones only if kubernetes is ZONAL instead of REGIONAL
+  regional: false
+  zones: [ "europe-west1-b", "europe-west1-c", "europe-west1-d" ]
   masterAuthorizedNetworks:
     - 0.0.0.0/0
 
@@ -148,7 +149,14 @@ kubernetes:
       metricsEnabled: true
       maxmindLicenseKey: # For GeoIP
       # See https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
+      # See https://kubernetes.github.io/ingress-nginx/deploy/hardening-guide/
       configMap:
+        keep-alive: 10
+        hide-headers: Server, X-Powered-By
+        ssl-ciphers: EECDH+AESGCM:EDH+AESGCM
+        enable-ocsp: true
+        hsts-preload: true
+        ssl-session-tickets: false
         enable-modsecurity: true
         enable-owasp-modsecurity-crs: true
         use-geoip: false

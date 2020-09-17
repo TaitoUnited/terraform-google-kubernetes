@@ -76,6 +76,7 @@ variable "kubernetes" {
     intranodeVisibilityEnabled = bool
     configConnectorEnabled = bool
     region = string
+    regional = bool
     zones = list(string)
     masterAuthorizedNetworks = list(string)
     nodePools = list(object({

@@ -21,7 +21,7 @@ module "kubernetes" {
   project_id                     = data.google_project.project.project_id
   name                           = local.kubernetes.name
   region                         = local.kubernetes.region
-  regional                       = length(local.kubernetes.zones) == 0
+  regional                       = local.kubernetes.regional
   zones                          = local.kubernetes.zones
   network                        = var.network
   subnetwork                     = var.subnetwork
