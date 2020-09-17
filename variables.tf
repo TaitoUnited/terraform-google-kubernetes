@@ -21,9 +21,9 @@ variable "helm_enabled" {
 }
 
 # NOTE: Remember to update also helm_apps.tf
-variable "nginx_ingress_version" {
+variable "ingress_nginx_version" {
   type        = string
-  default     = "2.12.1"
+  default     = "3.1.0"
 }
 
 # NOTE: Remember to update also helm_apps.tf
@@ -112,7 +112,7 @@ variable "kubernetes" {
       minNodeCount = number
       maxNodeCount = number
     }))
-    nginxIngressControllers = list(object({
+    ingressNginxControllers = list(object({
       class = string
       replicas = number
       metricsEnabled = bool

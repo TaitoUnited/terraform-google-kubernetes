@@ -143,8 +143,8 @@ kubernetes:
       maxNodeCount: 1
 
   # Ingress controllers
-  nginxIngressControllers:
-    - name: nginx-ingress
+  ingressNginxControllers:
+    - name: ingress-nginx
       class: nginx
       replicas: 3
       metricsEnabled: true

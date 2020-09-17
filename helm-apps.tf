@@ -16,16 +16,16 @@
 
 module "helm_apps" {
   source                      = "TaitoUnited/infrastructure-apps/helm"
-  version                     = "1.4.0" # NOTE: Remember to update also variables.tf
+  version                     = "1.6.0" # NOTE: Remember to update also variables.tf
 
   depends_on                  = [module.kubernetes]
   count                       = local.helmEnabled ? 1 : 0
 
-  nginx_ingress_version       = var.nginx_ingress_version
+  ingress_nginx_version       = var.ingress_nginx_version
   cert_manager_version        = var.cert_manager_version
 
   pod_security_policy_enabled = local.kubernetes.podSecurityPolicyEnabled
-  nginxIngressLoadBalancerIPs = google_compute_address.kubernetes_ingress.*.address
+  ingressNginxLoadBalancerIPs = google_compute_address.kubernetes_ingress.*.address
   email                       = var.email
 
   resources                   = local.kubernetes

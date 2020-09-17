@@ -31,9 +31,9 @@ locals {
     []
   )
 
-  nginxIngressControllers = try(
-    local.kubernetes.nginxIngressControllers != null
-    ? local.kubernetes.nginxIngressControllers
+  ingressNginxControllers = try(
+    local.kubernetes.ingressNginxControllers != null
+    ? local.kubernetes.ingressNginxControllers
     : [],
     []
   )
