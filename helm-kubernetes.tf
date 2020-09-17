@@ -23,7 +23,7 @@ resource "helm_release" "kubernetes" {
   namespace  = "kube-system"
   repository = "https://taitounited.github.io/taito-charts/"
   chart      = "kubernetes-admin"
-  version    = local.kubernetes_admin_version
+  version    = var.kubernetes_admin_version
 
   set {
     name     = "provider"

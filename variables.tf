@@ -20,6 +20,28 @@ variable "helm_enabled" {
   description = "Installs helm apps if set to true. Should be set to true only after Kubernetes cluster already exists."
 }
 
+# NOTE: Remember to update also helm_apps.tf
+variable "nginx_ingress_version" {
+  type        = string
+  default     = "2.12.1"
+}
+
+# NOTE: Remember to update also helm_apps.tf
+variable "cert_manager_version" {
+  type        = string
+  default     = "1.0.1"
+}
+
+variable "kubernetes_admin_version" {
+  type        = string
+  default     = "1.1.0"
+}
+
+variable "socat_tunneler_version" {
+  type        = string
+  default     = "0.1.0"
+}
+
 variable "email" {
   type        = string
   description = "DevOps support email"
