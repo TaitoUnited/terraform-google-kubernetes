@@ -25,14 +25,15 @@ resource "helm_release" "kubernetes" {
   chart      = "kubernetes-admin"
   version    = var.kubernetes_admin_version
 
+  values = [
+    yamlencode({
+      permissions = local.permissions
+    })
+  ]
+
   set {
     name     = "provider"
     value    = "gcp"
-  }
-
-  set {
-    name     = "permissions"
-    value    = yamlencode(local.permissions)
   }
 
   set {
