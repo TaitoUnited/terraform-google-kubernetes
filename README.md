@@ -92,9 +92,9 @@ kubernetes:
   context: zone1
   releaseChannel: STABLE
   maintenanceStartTime: 02:00
-  registryProjectId:
-  authenticatorSecurityGroup: # gke-security-groups@yourdomain.com
-  rbacSecurityGroup:
+  registryProjectId: ""
+  authenticatorSecurityGroup: "" # gke-security-groups@yourdomain.com
+  rbacSecurityGroup: ""
   clusterFirewallRulesEnabled: false
   masterPrivateEndpointEnabled: false
   masterGlobalAccessEnabled: true
@@ -126,7 +126,7 @@ kubernetes:
       acceleratorCount: 0
       secureBootEnabled: true
       diskSizeGb: 100
-      locations: # Leave empty or specify zones, example: europe-west1-b,europe-west1-c
+      locations: "" # Leave empty or specify zones, example: europe-west1-b,europe-west1-c
       # NOTE: On Google Cloud total number of nodes = node_count * num_of_zones
       minNodeCount: 1
       maxNodeCount: 1
@@ -183,10 +183,10 @@ kubernetes:
         use-geoip: false
         use-geoip2: true
         enable-real-ip: false
-        whitelist-source-range:
-        block-cidrs:
-        block-user-agents:
-        block-referers:
+        whitelist-source-range: ""
+        block-cidrs: ""
+        block-user-agents: ""
+        block-referers: ""
 
   # Certificate managers
   certManager:

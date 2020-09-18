@@ -17,7 +17,7 @@
 resource "google_kms_key_ring" "key_ring" {
   count      = try(local.kubernetes.dbEncryptionEnabled, false) ? 1 : 0
   name       = "${local.kubernetes.name}-key-ring"
-  project    = data.google_project.project.project_id
+  project    = var.project_id
   location   = local.kubernetes.region
 }
 
@@ -37,7 +37,7 @@ resource "google_kms_key_ring_iam_member" "kms_encrypter" {
   key_ring_id = google_kms_key_ring.key_ring[0].self_link
   role        = "roles/cloudkms.cryptoKeyEncrypter"
 
-  member = "serviceAccount:service-${data.google_project.project.number}@container-engine-robot.iam.gserviceaccount.com"
+  member = "serviceAccount:service-${var.project_number}@container-engine-robot.iam.gserviceaccount.com"
 }
 
 resource "google_kms_key_ring_iam_member" "kms_decrypter" {
@@ -45,5 +45,5 @@ resource "google_kms_key_ring_iam_member" "kms_decrypter" {
   key_ring_id = google_kms_key_ring.key_ring[0].self_link
   role        = "roles/cloudkms.cryptoKeyDecrypter"
 
-  member = "serviceAccount:service-${data.google_project.project.number}@container-engine-robot.iam.gserviceaccount.com"
+  member = "serviceAccount:service-${var.project_number}@container-engine-robot.iam.gserviceaccount.com"
 }

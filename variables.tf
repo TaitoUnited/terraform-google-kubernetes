@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
+variable "project_id" {
+  type        = string
+}
+
+variable "project_number" {
+  type        = string
+}
+
 variable "helm_enabled" {
   type        = bool
   default     = "false"
@@ -113,11 +121,12 @@ variable "kubernetes" {
       maxNodeCount = number
     }))
     ingressNginxControllers = list(object({
+      name = string
       class = string
       replicas = number
       metricsEnabled = bool
       maxmindLicenseKey = string
-      configmap = map(string)
+      configMap = map(string)
       tcpServices = map(string)
       udpServices = map(string)
     }))

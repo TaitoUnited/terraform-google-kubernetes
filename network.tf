@@ -17,7 +17,7 @@
 /* Static IP address for Kubernetes ingress load balancer */
 
 resource "google_compute_address" "kubernetes_ingress" {
-  count       = try(local.kubernetes.name, "") != "" ? 1 : 0
-  name        = "${local.kubernetes.name}-ingress"
+  count       = length(local.ingressNginxControllers)
+  name        = "${local.kubernetes.name}-${local.ingressNginxControllers[count.index].name}"
   description = "Kubernetes ingress public static IP address"
 }

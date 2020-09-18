@@ -16,11 +16,13 @@
 
 data "google_sql_database_instance" "postgresql" {
   count      = local.helmEnabled ? length(local.postgresqlClusterNames) : 0
+  project    = var.project_id
   name       = local.postgresqlClusterNames[count.index]
 }
 
 data "google_sql_database_instance" "mysql" {
   count      = local.helmEnabled ? length(local.mysqlClusterNames) : 0
+  project    = var.project_id
   name       = local.mysqlClusterNames[count.index]
 }
 

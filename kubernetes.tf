@@ -18,7 +18,7 @@ module "kubernetes" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/beta-private-cluster"
   version = "11.1.0"
 
-  project_id                     = data.google_project.project.project_id
+  project_id                     = var.project_id
   name                           = local.kubernetes.name
   region                         = local.kubernetes.region
   regional                       = local.kubernetes.regional
@@ -52,7 +52,7 @@ module "kubernetes" {
   registry_project_id             = (
                                       local.kubernetes.registryProjectId != ""
                                         ? local.kubernetes.registryProjectId
-                                        : data.google_project.project.project_id
+                                        : var.project_id
                                     )
 
   add_cluster_firewall_rules      = local.kubernetes.clusterFirewallRulesEnabled
@@ -120,7 +120,7 @@ module "kubernetes" {
       accelerator_type      = nodePool.acceleratorType
       accelerator_count     = nodePool.acceleratorCount
 
-      enable_secure_boot    = local.kubernetes.secureBootEnabled
+      enable_secure_boot    = nodePool.secureBootEnabled
       enable_integrity_monitoring = true
     }
   ]

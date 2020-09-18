@@ -22,22 +22,17 @@ locals {
   postgresqlClusterNames   = var.postgresql_cluster_names
   mysqlClusterNames        = var.mysql_cluster_names
 
-  helmEnabled              = var.helm_enabled && local.kubernetes != null
+  helmEnabled              = var.helm_enabled
 
-  nodePools = try(
+  nodePools = (
     local.kubernetes.nodePools != null
     ? local.kubernetes.nodePools
-    : [],
-    []
+    : []
   )
 
-  ingressNginxControllers = try(
+  ingressNginxControllers = (
     local.kubernetes.ingressNginxControllers != null
     ? local.kubernetes.ingressNginxControllers
-    : [],
-    []
+    : []
   )
-}
-
-data "google_project" "project" {
 }
