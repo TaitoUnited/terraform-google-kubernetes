@@ -18,6 +18,7 @@
 
 resource "google_compute_address" "kubernetes_ingress" {
   count       = length(local.ingressNginxControllers)
+  project     = var.project_id
   name        = "${local.kubernetes.name}-${local.ingressNginxControllers[count.index].name}"
   description = "Kubernetes ingress public static IP address"
 }
