@@ -32,7 +32,6 @@ resource "google_project_service" "containerregistry" {
 module "kubernetes" {
   source              = "TaitoUnited/kubernetes/google"
   version             = "1.4.0"
-  providers           = [ google ]
   depends_on          = [
     google_project_service.compute,
     google_project_service.cloudkms,
@@ -221,6 +220,7 @@ Combine with the following modules to get a complete infrastructure defined by Y
 - [Databases](https://registry.terraform.io/modules/TaitoUnited/databases/google)
 - [Storage](https://registry.terraform.io/modules/TaitoUnited/storage/google)
 - [Monitoring](https://registry.terraform.io/modules/TaitoUnited/monitoring/google)
+- [Events](https://registry.terraform.io/modules/TaitoUnited/events/google)
 - [PostgreSQL privileges](https://registry.terraform.io/modules/TaitoUnited/privileges/postgresql)
 - [MySQL privileges](https://registry.terraform.io/modules/TaitoUnited/privileges/mysql)
 
