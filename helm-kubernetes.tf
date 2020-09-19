@@ -26,7 +26,7 @@ resource "helm_release" "kubernetes" {
   version    = var.kubernetes_admin_version
 
   values = [
-    yamlencode({
+    jsonencode({
       permissions = local.permissions
     })
   ]
@@ -35,10 +35,4 @@ resource "helm_release" "kubernetes" {
     name     = "provider"
     value    = "gcp"
   }
-
-  set {
-    name     = "dbProxyNamespace"
-    value    = "db-proxy"
-  }
-
 }
