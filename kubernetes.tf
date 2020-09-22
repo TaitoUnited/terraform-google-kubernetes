@@ -99,7 +99,7 @@ module "kubernetes" {
   # cluster_autoscaling     = map
 
   remove_default_node_pool  = true
-  initial_node_count        = 1
+  # initial_node_count        = 1
 
   node_pools = [
     for nodePool in local.kubernetes.nodePools:

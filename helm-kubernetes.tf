@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-resource "helm_release" "kubernetes" {
+resource "helm_release" "kubernetes_admin" {
   depends_on = [module.kubernetes]
 
   count      = local.helmEnabled ? 1 : 0
