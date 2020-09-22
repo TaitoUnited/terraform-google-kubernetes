@@ -104,7 +104,7 @@ module "kubernetes" {
   node_pools = [
     for nodePool in local.kubernetes.nodePools:
     {
-      name                  = "${local.kubernetes.name}-default"
+      name                  = nodePool.name
       # service_account     = var.compute_engine_service_account
       node_locations        = nodePool.locations
       initial_node_count    = nodePool.minNodeCount
