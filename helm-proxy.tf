@@ -32,6 +32,7 @@ resource "helm_release" "postgres_proxy" {
   count      = local.helmEnabled ? length(local.postgresqlClusterNames) : 0
   name       = local.postgresqlClusterNames[count.index]
   namespace  = "db-proxy"
+  create_namespace = true
   repository = "https://kubernetes-charts.storage.googleapis.com/"
   chart      = "socat-tunneller"
   version    = var.socat_tunneler_version
