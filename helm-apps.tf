@@ -16,7 +16,7 @@
 
 module "helm_apps" {
   source                      = "TaitoUnited/infrastructure-apps/helm"
-  version                     = "1.7.1" # NOTE: Remember to update also variables.tf
+  version                     = "1.7.2" # NOTE: Remember to update also variables.tf
 
   depends_on                  = [module.kubernetes]
   count                       = local.helmEnabled ? 1 : 0
