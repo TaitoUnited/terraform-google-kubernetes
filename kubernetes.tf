@@ -107,10 +107,17 @@ module "kubernetes" {
       name                  = nodePool.name
       # service_account     = var.compute_engine_service_account
       node_locations        = nodePool.locations
+
+      node_count            = (
+        nodePool.minNodeCount == nodePool.maxNodeCount
+        ? nodePool.minNodeCount
+        : null
+      )
+      autoscaling           = nodePool.minNodeCount != nodePool.maxNodeCount
       initial_node_count    = nodePool.minNodeCount
       min_count             = nodePool.minNodeCount
       max_count             = nodePool.maxNodeCount
-      autoscaling           = nodePool.minNodeCount < nodePool.maxNodeCount
+
       auto_repair           = true
       auto_upgrade          = true
       disk_size_gb          = nodePool.diskSizeGb
