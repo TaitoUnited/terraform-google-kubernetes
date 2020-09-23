@@ -31,13 +31,13 @@ variable "helm_enabled" {
 # NOTE: Remember to update also helm_apps.tf
 variable "ingress_nginx_version" {
   type        = string
-  default     = "3.1.0"
+  default     = "3.3.0"
 }
 
 # NOTE: Remember to update also helm_apps.tf
 variable "cert_manager_version" {
   type        = string
-  default     = "1.0.1"
+  default     = "1.0.2"
 }
 
 variable "kubernetes_admin_version" {
