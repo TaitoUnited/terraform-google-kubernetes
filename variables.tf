@@ -42,7 +42,7 @@ variable "cert_manager_version" {
 
 variable "kubernetes_admin_version" {
   type        = string
-  default     = "1.1.1"
+  default     = "1.1.2"
 }
 
 variable "socat_tunneler_version" {
