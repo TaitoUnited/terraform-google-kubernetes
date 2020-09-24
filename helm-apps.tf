@@ -16,11 +16,12 @@
 
 module "helm_apps" {
   source                      = "TaitoUnited/infrastructure-apps/helm"
-  version                     = "1.7.3" # NOTE: Remember to update also variables.tf
+  version                     = "1.8.1" # NOTE: Remember to update also variables.tf
 
   depends_on                  = [module.kubernetes]
   count                       = local.helmEnabled ? 1 : 0
 
+  generate_ingress_dhparam    = var.generate_ingress_dhparam
   ingress_nginx_version       = var.ingress_nginx_version
   cert_manager_version        = var.cert_manager_version
 

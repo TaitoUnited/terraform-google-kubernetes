@@ -40,20 +40,25 @@ module "kubernetes" {
   ]
 
   # Settings
-  helm_enabled        = false  # Should be false on the first run, then true
-  email               = "devops@mydomain.com"
+  helm_enabled             = false  # Should be false on the first run, then true
+  email                    = "devops@mydomain.com"
+  generate_ingress_dhparam = false
 
   # Network
-  network                = module.network.network
-  subnetwork             = module.network.subnet_names[0]
-  pods_ip_range_name     = module.network.pods_ip_range_name
-  services_ip_range_name = module.network.services_ip_range_name
+  network                  = module.network.network
+  subnetwork               = module.network.subnet_names[0]
+  pods_ip_range_name       = module.network.pods_ip_range_name
+  services_ip_range_name   = module.network.services_ip_range_name
 
   # Permissions
-  permissions            = yamldecode(file("${path.root}/../infra.yaml"))["permissions"]
+  permissions              = yamldecode(
+    file("${path.root}/../infra.yaml")
+  )["permissions"]
 
   # Kubernetes
-  kubernetes             = yamldecode(file("${path.root}/../infra.yaml"))["kubernetes"]
+  kubernetes               = yamldecode(
+    file("${path.root}/../infra.yaml")
+  )["kubernetes"]
 
   # Database clusters (for db proxies)
   postgresql_cluster_names = [ "my-postgresql-1" ]
