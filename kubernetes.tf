@@ -16,7 +16,7 @@
 
 module "kubernetes" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/beta-private-cluster"
-  version = "11.1.0"
+  version = "12.0.0"
 
   project_id                     = var.project_id
   name                           = local.kubernetes.name

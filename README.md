@@ -6,7 +6,7 @@ Example usage:
 provider "google" {
   project      = "my-infrastructure"
   region       = "europe-west1"
-  zone         = "europe-west1b"
+  zone         = "europe-west1-b"
 }
 
 # Enable Google APIs
