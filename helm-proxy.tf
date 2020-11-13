@@ -15,22 +15,22 @@
  */
 
 data "google_sql_database_instance" "postgresql" {
-  count      = local.helmEnabled ? length(local.postgresqlClusterNames) : 0
+  for_each   = {for item in (local.helmEnabled ? local.postgresqlClusterNames : []): item => item}
   project    = var.project_id
-  name       = local.postgresqlClusterNames[count.index]
+  name       = each.value
 }
 
 data "google_sql_database_instance" "mysql" {
-  count      = local.helmEnabled ? length(local.mysqlClusterNames) : 0
+  for_each   = {for item in (local.helmEnabled ? local.mysqlClusterNames : []): item => item}
   project    = var.project_id
-  name       = local.mysqlClusterNames[count.index]
+  name       = each.value
 }
 
 resource "helm_release" "postgres_proxy" {
   depends_on = [module.kubernetes, module.helm_apps]
 
-  count      = local.helmEnabled ? length(local.postgresqlClusterNames) : 0
-  name       = local.postgresqlClusterNames[count.index]
+  for_each   = {for item in (local.helmEnabled ? local.postgresqlClusterNames : []): item => item}
+  name       = each.value
   namespace  = "db-proxy"
   create_namespace = true
   repository = "https://kubernetes-charts.storage.googleapis.com/"
@@ -40,7 +40,7 @@ resource "helm_release" "postgres_proxy" {
 
   set {
     name  = "tunnel.host"
-    value = data.google_sql_database_instance.postgresql[count.index].private_ip_address
+    value = data.google_sql_database_instance.postgresql[each.key].private_ip_address
   }
 
   set {
@@ -52,8 +52,8 @@ resource "helm_release" "postgres_proxy" {
 resource "helm_release" "mysql_proxy" {
   depends_on = [module.kubernetes, helm_release.postgres_proxy]
 
-  count      = local.helmEnabled ? length(local.mysqlClusterNames) : 0
-  name       = local.mysqlClusterNames[count.index]
+  for_each   = {for item in (local.helmEnabled ? local.mysqlClusterNames : []): item => item}
+  name       = each.value
   namespace  = "db-proxy"
   repository = "https://kubernetes-charts.storage.googleapis.com/"
   chart      = "socat-tunneller"
@@ -62,7 +62,7 @@ resource "helm_release" "mysql_proxy" {
 
   set {
     name  = "tunnel.host"
-    value = data.google_sql_database_instance.mysql[count.index].private_ip_address
+    value = data.google_sql_database_instance.mysql[each.key].private_ip_address
   }
 
   set {
