@@ -39,30 +39,30 @@ module "kubernetes" {
     google_project_service.containerregistry,
   ]
 
-  # Settings
-  helm_enabled             = false  # Should be false on the first run, then true
-  email                    = "devops@mydomain.com"
-  generate_ingress_dhparam = false
+  email                      = "devops@mydomain.com"
 
   # Network
-  network                  = module.network.network
-  subnetwork               = module.network.subnet_names[0]
-  pods_ip_range_name       = module.network.pods_ip_range_name
-  services_ip_range_name   = module.network.services_ip_range_name
+  network                    = module.network.network
+  subnetwork                 = module.network.subnet_names[0]
+  pods_ip_range_name         = module.network.pods_ip_range_name
+  services_ip_range_name     = module.network.services_ip_range_name
 
   # Permissions
-  permissions              = yamldecode(
+  permissions                = yamldecode(
     file("${path.root}/../infra.yaml")
   )["permissions"]
 
   # Kubernetes
-  kubernetes               = yamldecode(
+  kubernetes                 = yamldecode(
     file("${path.root}/../infra.yaml")
   )["kubernetes"]
 
-  # Database clusters (for db proxies)
-  postgresql_cluster_names = [ "my-postgresql-1" ]
-  mysql_cluster_names      = [ "my-mysql-1" ]
+  # Helm infrastructure apps
+  helm_enabled               = false  # Should be false on the first run, then true
+  generate_ingress_dhparam   = false
+  use_kubernetes_as_db_proxy = true
+  postgresql_cluster_names   = [ "my-postgresql-1" ]
+  mysql_cluster_names        = [ "my-mysql-1" ]
 }
 ```
 
@@ -203,17 +203,8 @@ kubernetes:
   knative:
     enabled: false # Using Google Cloud Run
 
-  # Logging, monitoring, and tracing
-  falco:
-    enabled: false # NOTE: Not supported yet
-  jaeger:
-    enabled: false # NOTE: Not supported yet
-  sentry:
-    enabled: false # NOTE: Not supported yet
-
-  # CI/CD
-  jenkinsx:
-    enabled: false # NOTE: Not supported yet
+  # TIP: You can install more infrastructure apps on your Kubernetes with:
+  # https://github.com/TaitoUnited/infra-apps-template
 ```
 
 Combine with the following modules to get a complete infrastructure defined by YAML:
@@ -225,7 +216,7 @@ Combine with the following modules to get a complete infrastructure defined by Y
 - [Databases](https://registry.terraform.io/modules/TaitoUnited/databases/google)
 - [Storage](https://registry.terraform.io/modules/TaitoUnited/storage/google)
 - [Monitoring](https://registry.terraform.io/modules/TaitoUnited/monitoring/google)
-- [Events](https://registry.terraform.io/modules/TaitoUnited/events/google)
+- [Integrations](https://registry.terraform.io/modules/TaitoUnited/integrations/google)
 - [PostgreSQL privileges](https://registry.terraform.io/modules/TaitoUnited/privileges/postgresql)
 - [MySQL privileges](https://registry.terraform.io/modules/TaitoUnited/privileges/mysql)
 

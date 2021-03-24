@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 Taito United
+ * Copyright 2021 Taito United
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ locals {
 
   kubernetes               = var.kubernetes
   permissions              = var.permissions
-  postgresqlClusterNames   = var.postgresql_cluster_names
-  mysqlClusterNames        = var.mysql_cluster_names
+  postgresqlClusterNames   = var.use_kubernetes_as_db_proxy ? var.postgresql_cluster_names : []
+  mysqlClusterNames        = var.use_kubernetes_as_db_proxy ? var.mysql_cluster_names : []
 
   helmEnabled              = var.helm_enabled
 
