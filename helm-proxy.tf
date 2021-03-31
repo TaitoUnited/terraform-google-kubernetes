@@ -33,7 +33,7 @@ resource "helm_release" "postgres_proxy" {
   name       = each.value
   namespace  = "db-proxy"
   create_namespace = true
-  repository = "https://kubernetes-charts.storage.googleapis.com/"
+  repository = "https://isotoma.github.io/charts/"
   chart      = "socat-tunneller"
   version    = var.socat_tunneler_version
   wait       = false
@@ -55,7 +55,7 @@ resource "helm_release" "mysql_proxy" {
   for_each   = {for item in (local.helmEnabled ? local.mysqlClusterNames : []): item => item}
   name       = each.value
   namespace  = "db-proxy"
-  repository = "https://kubernetes-charts.storage.googleapis.com/"
+  repository = "https://isotoma.github.io/charts/"
   chart      = "socat-tunneller"
   version    = var.socat_tunneler_version
   wait       = false
