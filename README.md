@@ -71,24 +71,40 @@ Example YAML:
 ```
 # Permissions
 permissions:
+
+  # Cluster-wide permissions
   clusterRoles:
     - name: taito-iam-admin
-      subjects: [ "group:devops@mydomain.com" ]
+      subjects: [ "group:admins@mydomain.com" ]
     - name: taito-status-viewer
       subjects: [ "group:staff@mydomain.com" ]
+
+  # Namespace specific permissions
   namespaces:
+    - name: common
+      clusterRoles:
+        - name: taito-secret-viewer
+          subjects:
+            - group:developers@mydomain.com
+            - user:cicd-tester@${taito_zone}.iam.gserviceaccount.com
     - name: db-proxy
       clusterRoles:
         - name: taito-pod-portforwarder
-          subjects: [ "user:jane.external@anotherdomain.com" ]
+          subjects:
+            - group:developers@mydomain.com
+            - user:cicd-tester@${taito_zone}.iam.gserviceaccount.com
     - name: my-namespace
       clusterRoles:
-        - name: taito-status-viewer
-          subjects: [ "user:jane.external@anotherdomain.com" ]
+        - name: taito-developer
+          subjects:
+            - user:john.doe@mydomain.com
+            - user:jane.doe@mydomain.com
     - name: another-namespace
       clusterRoles:
         - name: taito-developer
-          subjects: [ "user:jane.external@anotherdomain.com" ]
+          subjects:
+            - user:john.doe@mydomain.com
+            - user:jane.doe@mydomain.com
 
 # For Kubernetes setting descriptions, see
 # https://registry.terraform.io/modules/terraform-google-modules/kubernetes-engine/google/
@@ -146,6 +162,16 @@ kubernetes:
       minNodeCount: 1
       maxNodeCount: 1
 
+  # Platforms
+  istio:
+    enabled: false
+  knative:
+    enabled: false # Using Google Cloud Run
+
+  # Certificate managers
+  certManager:
+    enabled: true
+
   # Ingress controllers
   ingressNginxControllers:
     - name: ingress-nginx
@@ -192,16 +218,6 @@ kubernetes:
         block-cidrs: ""
         block-user-agents: ""
         block-referers: ""
-
-  # Certificate managers
-  certManager:
-    enabled: true
-
-  # Platforms
-  istio:
-    enabled: false
-  knative:
-    enabled: false # Using Google Cloud Run
 
   # TIP: You can install more infrastructure apps on your Kubernetes with:
   # https://github.com/TaitoUnited/infra-apps-template
