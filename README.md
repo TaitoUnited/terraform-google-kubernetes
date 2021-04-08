@@ -75,9 +75,11 @@ permissions:
   # Cluster-wide permissions
   clusterRoles:
     - name: taito-iam-admin
-      subjects: [ "group:admins@mydomain.com" ]
+      subjects:
+        - group:admins@mydomain.com
     - name: taito-status-viewer
-      subjects: [ "group:staff@mydomain.com" ]
+      subjects:
+        - group:staff@mydomain.com
 
   # Namespace specific permissions
   namespaces:
@@ -106,8 +108,6 @@ permissions:
             - user:john.doe@mydomain.com
             - user:jane.doe@mydomain.com
 
-# For Kubernetes setting descriptions, see
-# https://registry.terraform.io/modules/terraform-google-modules/kubernetes-engine/google/
 kubernetes:
   name: zone1-common-kube1
   context: zone1
@@ -222,6 +222,12 @@ kubernetes:
   # TIP: You can install more infrastructure apps on your Kubernetes with:
   # https://github.com/TaitoUnited/infra-apps-template
 ```
+
+YAML attributes:
+
+- See variables.tf for all the supported YAML attributes.
+- See [kubernetes-engine](https://registry.terraform.io/modules/terraform-google-modules/kubernetes-engine/google/) for attribute descriptions.
+- See [Cluster Roles](https://github.com/TaitoUnited/taito-charts/blob/master/kubernetes-admin/templates/clusterrole.yaml) of kubernetes-admin Helm Chart for all predefined role definitions (e.g. taito-developer, taito-status-viewer, taito-secret-viewer).
 
 Combine with the following modules to get a complete infrastructure defined by YAML:
 
