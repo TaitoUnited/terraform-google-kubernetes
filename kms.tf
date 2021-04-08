@@ -15,14 +15,14 @@
 */
 
 resource "google_kms_key_ring" "key_ring" {
-  count      = try(local.kubernetes.dbEncryptionEnabled, false) ? 1 : 0
+  count      = coalesce(local.kubernetes.dbEncryptionEnabled, false) ? 1 : 0
   name       = "${local.kubernetes.name}-key-ring"
   project    = var.project_id
   location   = local.kubernetes.region
 }
 
 resource "google_kms_crypto_key" "kubernetes_key" {
-  count           = (try(local.kubernetes.dbEncryptionEnabled, false) ? 1 : 0) * (try(local.kubernetes.name, "") != "" ? 1 : 0)
+  count           = (coalesce(local.kubernetes.dbEncryptionEnabled, false) ? 1 : 0) * (coalesce(local.kubernetes.name, "") != "" ? 1 : 0)
   name            = "${local.kubernetes.name}-key"
   key_ring        = google_kms_key_ring.key_ring[0].self_link
   rotation_period = "7776000s" # 90 days
@@ -33,7 +33,7 @@ resource "google_kms_crypto_key" "kubernetes_key" {
 }
 
 resource "google_kms_key_ring_iam_member" "kms_encrypter" {
-  count       = try(local.kubernetes.dbEncryptionEnabled, false) ? 1 : 0
+  count       = coalesce(local.kubernetes.dbEncryptionEnabled, false) ? 1 : 0
   key_ring_id = google_kms_key_ring.key_ring[0].self_link
   role        = "roles/cloudkms.cryptoKeyEncrypter"
 
@@ -41,7 +41,7 @@ resource "google_kms_key_ring_iam_member" "kms_encrypter" {
 }
 
 resource "google_kms_key_ring_iam_member" "kms_decrypter" {
-  count       = try(local.kubernetes.dbEncryptionEnabled, false) ? 1 : 0
+  count       = coalesce(local.kubernetes.dbEncryptionEnabled, false) ? 1 : 0
   key_ring_id = google_kms_key_ring.key_ring[0].self_link
   role        = "roles/cloudkms.cryptoKeyDecrypter"
 
