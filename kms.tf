@@ -22,7 +22,7 @@ resource "google_kms_key_ring" "key_ring" {
 }
 
 resource "google_kms_crypto_key" "kubernetes_key" {
-  count           = (coalesce(local.kubernetes.dbEncryptionEnabled, false) ? 1 : 0) * (coalesce(local.kubernetes.name, "") != "" ? 1 : 0)
+  count           = (coalesce(local.kubernetes.dbEncryptionEnabled, false) ? 1 : 0) * (local.kubernetes.name != null ? 1 : 0)
   name            = "${local.kubernetes.name}-key"
   key_ring        = google_kms_key_ring.key_ring[0].self_link
   rotation_period = "7776000s" # 90 days
