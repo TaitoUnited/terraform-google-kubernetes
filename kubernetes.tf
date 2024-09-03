@@ -15,8 +15,8 @@
  */
 
 module "kubernetes" {
-  source  = "terraform-google-modules/kubernetes-engine/google//modules/beta-private-cluster"
-  version = "12.0.0"
+  source  = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster"
+  version = "32.0.4"
 
   project_id                     = var.project_id
   name                           = local.kubernetes.name
@@ -42,18 +42,18 @@ module "kubernetes" {
     state    = local.kubernetes.dbEncryptionEnabled ? "ENCRYPTED" : "DECRYPTED"
     key_name = (
       local.kubernetes.dbEncryptionEnabled
-        ? google_kms_crypto_key.kubernetes_key[0].self_link
+        ? google_kms_crypto_key.kubernetes_key[0].id
         : ""
     )
   }]
 
   create_service_account          = true
   grant_registry_access           = true
-  registry_project_id             = (
+  registry_project_ids            = [(
                                       local.kubernetes.registryProjectId != ""
                                         ? local.kubernetes.registryProjectId
                                         : var.project_id
-                                    )
+                                    )]
 
   add_cluster_firewall_rules      = local.kubernetes.clusterFirewallRulesEnabled
   enable_private_endpoint         = local.kubernetes.masterPrivateEndpointEnabled
@@ -79,13 +79,9 @@ module "kubernetes" {
   monitoring_service              = "monitoring.googleapis.com/kubernetes"
 
   config_connector                = local.kubernetes.configConnectorEnabled
-  istio                           = local.kubernetes.istio.enabled
-  cloudrun                        = local.kubernetes.knative.enabled
 
   # Enable G Suite groups for access control
   authenticator_security_group    = local.kubernetes.authenticatorSecurityGroup
-
-  enable_pod_security_policy      = local.kubernetes.podSecurityPolicyEnabled
 
   kubernetes_version        = null
   release_channel           = local.kubernetes.releaseChannel

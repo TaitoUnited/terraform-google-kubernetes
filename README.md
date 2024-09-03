@@ -31,7 +31,7 @@ resource "google_project_service" "containerregistry" {
 
 module "kubernetes" {
   source              = "TaitoUnited/kubernetes/google"
-  version             = "1.4.0"
+  version             = "2.5.0"
   depends_on          = [
     google_project_service.compute,
     google_project_service.cloudkms,
@@ -123,7 +123,6 @@ kubernetes:
   shieldedNodesEnabled: true
   networkPolicyEnabled: false
   dbEncryptionEnabled: false
-  podSecurityPolicyEnabled: false
   verticalPodAutoscalingEnabled: true
   dnsCacheEnabled: true
   pdCsiDriverEnabled: true
@@ -161,12 +160,6 @@ kubernetes:
       # NOTE: On Google Cloud total number of nodes = node_count * num_of_zones
       minNodeCount: 1
       maxNodeCount: 1
-
-  # Platforms
-  istio:
-    enabled: false
-  knative:
-    enabled: false # Using Google Cloud Run
 
   # Certificate managers
   certManager:

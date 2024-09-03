@@ -67,7 +67,6 @@ variable "kubernetes" {
     shieldedNodesEnabled = bool
     networkPolicyEnabled = bool
     dbEncryptionEnabled = bool
-    podSecurityPolicyEnabled = bool
     verticalPodAutoscalingEnabled = bool
     dnsCacheEnabled = bool
     pdCsiDriverEnabled = bool
@@ -103,12 +102,6 @@ variable "kubernetes" {
       udpServices = map(string)
     }))
     certManager = object({
-      enabled = bool
-    })
-    istio = object({
-      enabled = bool
-    })
-    knative = object({
       enabled = bool
     })
   })
@@ -168,14 +161,14 @@ variable "mysql_cluster_names" {
 # TODO: Should be optional and null by default
 variable "ingress_nginx_version" {
   type        = string
-  default     = "4.0.19"
+  default     = "4.11.2"
 }
 
 # NOTE: Remember to update also helm_apps.tf
 # TODO: Should be optional and null by default
 variable "cert_manager_version" {
   type        = string
-  default     = "1.8.0"
+  default     = "1.15.3"
 }
 
 variable "kubernetes_admin_version" {
@@ -185,5 +178,5 @@ variable "kubernetes_admin_version" {
 
 variable "socat_tunneler_version" {
   type        = string
-  default     = "0.1.5"
+  default     = "0.2.0"
 }
