@@ -57,6 +57,9 @@ module "kubernetes" {
     file("${path.root}/../infra.yaml")
   )["kubernetes"]
 
+  # Registry
+  grant_registry_access      = false  # Should be false on the first run, then true
+
   # Helm infrastructure apps
   helm_enabled               = false  # Should be false on the first run, then true
   generate_ingress_dhparam   = false

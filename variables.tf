@@ -51,6 +51,12 @@ variable "services_ip_range_name" {
   description = "Kubernetes ip range services"
 }
 
+variable "grant_registry_access" {
+  type        = bool
+  default     = "false"
+  description = "Grants registry access. If you have problems with this, set it to true only after Kubernetes cluster already exists."
+}
+
 variable "kubernetes" {
   type = object({
     name = string
