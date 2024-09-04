@@ -48,13 +48,14 @@ module "kubernetes" {
   }]
 
   create_service_account          = true
+  /* TODO: not working with multiple modules 
   grant_registry_access           = true
-  registry_project_ids            = [(
-                                      local.kubernetes.registryProjectId != ""
-                                        ? local.kubernetes.registryProjectId
-                                        : var.project_id
-                                    )]
-
+  registry_project_ids            = (
+                                      local.kubernetes.registryProjectId != "" && local.kubernetes.registryProjectId != null
+                                        ? [var.project_id, local.kubernetes.registryProjectId]
+                                        : [var.project_id]
+                                    )
+  */
   add_cluster_firewall_rules      = local.kubernetes.clusterFirewallRulesEnabled
   enable_private_endpoint         = local.kubernetes.masterPrivateEndpointEnabled
   master_global_access_enabled    = local.kubernetes.masterGlobalAccessEnabled
