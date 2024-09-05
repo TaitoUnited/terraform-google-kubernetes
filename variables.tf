@@ -65,7 +65,6 @@ variable "kubernetes" {
     maintenanceStartTime = string
     registryProjectId = string
     authenticatorSecurityGroup = string
-    rbacSecurityGroup = string
     clusterFirewallRulesEnabled = bool
     masterPrivateEndpointEnabled = bool
     masterGlobalAccessEnabled = bool

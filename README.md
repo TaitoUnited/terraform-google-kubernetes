@@ -118,7 +118,6 @@ kubernetes:
   maintenanceStartTime: 02:00
   registryProjectId: ""
   authenticatorSecurityGroup: "" # gke-security-groups@yourdomain.com
-  rbacSecurityGroup: ""
   clusterFirewallRulesEnabled: false
   masterPrivateEndpointEnabled: false
   masterGlobalAccessEnabled: true
