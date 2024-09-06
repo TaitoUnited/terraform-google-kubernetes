@@ -25,7 +25,7 @@ module "helm_apps" {
   ingress_nginx_version       = var.ingress_nginx_version
   cert_manager_version        = var.cert_manager_version
 
-  ingressNginxLoadBalancerIPs = google_compute_address.kubernetes_ingress.*.address
+  ingressNginxLoadBalancerIPs = values(google_compute_address.kubernetes_ingress).*.address
   email                       = var.email
 
   resources                   = local.kubernetes
