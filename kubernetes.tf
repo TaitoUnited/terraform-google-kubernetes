@@ -47,6 +47,9 @@ module "kubernetes" {
     )
   }]
 
+  # TODO: disabled by default because of webhook admission problem
+  monitoring_enable_managed_prometheus = false
+
   create_service_account          = true
   grant_registry_access           = var.grant_registry_access
   registry_project_ids            = (
