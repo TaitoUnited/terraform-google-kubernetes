@@ -15,8 +15,10 @@
  */
 
 module "kubernetes" {
-  source  = "terraform-google-modules/kubernetes-engine/google//modules/private-cluster"
-  version = "32.0.4"
+  source  = "terraform-google-modules/kubernetes-engine/google//modules/beta-private-cluster"
+  version = "33.0.4"
+
+  deletion_protection            = true
 
   project_id                     = var.project_id
   name                           = local.kubernetes.name
@@ -47,9 +49,6 @@ module "kubernetes" {
     )
   }]
 
-  # TODO: disabled by default because of webhook admission problem
-  monitoring_enable_managed_prometheus = false
-
   create_service_account          = true
   grant_registry_access           = var.grant_registry_access
   registry_project_ids            = (
@@ -59,17 +58,30 @@ module "kubernetes" {
                                     )
   add_cluster_firewall_rules      = local.kubernetes.addClusterFirewallRules
   enable_private_endpoint         = local.kubernetes.enablePrivateEndpoint
+  deploy_using_private_endpoint   = local.kubernetes.deployUsingPrivateEndpoint
   master_global_access_enabled    = local.kubernetes.masterGlobalAccessEnabled
   enable_private_nodes            = local.kubernetes.enablePrivateNodes
+
   network_policy                  = local.kubernetes.networkPolicy
-  # network_policy_provider         = "CALICO"
+  datapath_provider               = local.kubernetes.datapathProvider
+  enable_fqdn_network_policy      = local.kubernetes.enableFqdnNetworkPolicy
+  enable_cilium_clusterwide_network_policy = local.kubernetes.enableCiliumClusterwideNetworkPolicy
+
   enable_shielded_nodes           = local.kubernetes.enableShieldedNodes
-  # sandbox_enabled                 = local.kubernetes.sandboxEnabled
+  enable_confidential_nodes       = local.kubernetes.enableConfidentialNodes
+  sandbox_enabled                 = local.kubernetes.sandboxEnabled
+  security_posture_mode               = local.kubernetes.securityPostureMode
+  security_posture_vulnerability_mode = local.kubernetes.securityPostureVulnerabilityMode
+  workload_vulnerability_mode         = local.kubernetes.workloadVulnerabilityMode
+
   enable_vertical_pod_autoscaling = local.kubernetes.enableVerticalPodAutoscaling
   horizontal_pod_autoscaling      = true
   http_load_balancing             = true
   dns_cache                       = local.kubernetes.dnsCache
+
   gce_pd_csi_driver               = local.kubernetes.gcePdCsiDriver
+  gcs_fuse_csi_driver             = local.kubernetes.gcsFuseCsiDriver
+  filestore_csi_driver            = local.kubernetes.filestoreCsiDriver
 
   resource_usage_export_dataset_id   = local.kubernetes.resourceUsageExportDatasetId
   enable_resource_consumption_export = local.kubernetes.enableResourceConsumptionExport
@@ -79,6 +91,7 @@ module "kubernetes" {
 
   logging_service                 = "logging.googleapis.com/kubernetes"
   monitoring_service              = "monitoring.googleapis.com/kubernetes"
+  monitoring_enable_managed_prometheus = local.kubernetes.monitoringEnableManagedPrometheus
 
   config_connector                = local.kubernetes.configConnector
 
@@ -88,6 +101,8 @@ module "kubernetes" {
   kubernetes_version        = null
   release_channel           = local.kubernetes.releaseChannel
   maintenance_start_time    = local.kubernetes.maintenanceStartTime
+
+  gke_backup_agent_config   = local.kubernetes.gkeBackupAgentConfig
 
   node_metadata             = "GKE_METADATA_SERVER"
 

@@ -111,6 +111,8 @@ permissions:
             - user:john.doe@mydomain.com
             - user:jane.doe@mydomain.com
 
+# For Kubernetes setting descriptions, see
+# https://registry.terraform.io/modules/terraform-google-modules/kubernetes-engine/google/latest/submodules/private-cluster
 kubernetes:
   name: zone1-common-kube1
   context: zone1
@@ -120,20 +122,33 @@ kubernetes:
   authenticatorSecurityGroup: "" # gke-security-groups@yourdomain.com
   addClusterFirewallRules: true
   enablePrivateEndpoint: false
+  deployUsingPrivateEndpoint: false
   masterGlobalAccessEnabled: true
   enablePrivateNodes: true
   enableShieldedNodes: true
+  enableConfidentialNodes: false
+  sandboxEnabled: false
+  securityPostureMode: DISABLED
+  securityPostureVulnerabilityMode: VULNERABILITY_DISABLED
+  workloadVulnerabilityMode: DISABLED
   networkPolicy: false
+  enableFqdnNetworkPolicy: false
+  enableCiliumClusterwideNetworkPolicy: false
+  datapathProvider: ADVANCED_DATAPATH
   dbEncryptionEnabled: false
   enableVerticalPodAutoscaling: true
   dnsCache: true
   gcePdCsiDriver: true
+  gcsFuseCsiDriver: false
+  filestoreCsiDriver: false
   enableResourceConsumptionExport: false
   resourceUsageExportDatasetId: ""
   enableNetworkEgressExport: false
   enableBinaryAuthorization: false
   enableIntranodeVisibility: false
   configConnector: false
+  monitoringEnableManagedPrometheus: false
+  gkeBackupAgentConfig: false
   region: europe-west1
   regional: false
   zones: [ "europe-west1-b", "europe-west1-c", "europe-west1-d" ]
