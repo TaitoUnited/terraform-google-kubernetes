@@ -118,22 +118,22 @@ kubernetes:
   maintenanceStartTime: 02:00
   registryProjectId: ""
   authenticatorSecurityGroup: "" # gke-security-groups@yourdomain.com
-  clusterFirewallRulesEnabled: false
-  masterPrivateEndpointEnabled: false
+  addClusterFirewallRules: true
+  enablePrivateEndpoint: false
   masterGlobalAccessEnabled: true
-  privateNodesEnabled: true
-  shieldedNodesEnabled: true
-  networkPolicyEnabled: false
+  enablePrivateNodes: true
+  enableShieldedNodes: true
+  networkPolicy: false
   dbEncryptionEnabled: false
-  verticalPodAutoscalingEnabled: true
-  dnsCacheEnabled: true
-  pdCsiDriverEnabled: true
-  resourceConsumptionExportEnabled: false
-  resourceConsumptionExportDatasetId:
-  networkEgressExportEnabled: false
-  binaryAuthorizationEnabled: false
-  intranodeVisibilityEnabled: false
-  configConnectorEnabled: false
+  enableVerticalPodAutoscaling: true
+  dnsCache: true
+  gcePdCsiDriver: true
+  enableResourceConsumptionExport: false
+  resourceUsageExportDatasetId: ""
+  enableNetworkEgressExport: false
+  enableBinaryAuthorization: false
+  enableIntranodeVisibility: false
+  configConnector: false
   region: europe-west1
   regional: false
   zones: [ "europe-west1-b", "europe-west1-c", "europe-west1-d" ]

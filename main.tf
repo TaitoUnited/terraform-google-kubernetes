@@ -15,7 +15,7 @@
  */
 
 locals {
-  kubernetes_master_cidr   = "172.16.0.0/28"
+  master_ipv4_cidr_block   = "172.16.0.0/28"
 
   kubernetes               = var.kubernetes
   permissions              = var.permissions

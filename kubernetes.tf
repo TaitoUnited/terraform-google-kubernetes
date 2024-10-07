@@ -28,7 +28,7 @@ module "kubernetes" {
   ip_range_pods                  = var.pods_ip_range_name
   ip_range_services              = var.services_ip_range_name
   # compute_engine_service_account = var.compute_engine_service_account
-  master_ipv4_cidr_block         = local.kubernetes_master_cidr
+  master_ipv4_cidr_block         = local.master_ipv4_cidr_block
 
   master_authorized_networks = [
     for cidr in local.kubernetes.masterAuthorizedNetworks:
@@ -57,30 +57,30 @@ module "kubernetes" {
                                         ? [var.project_id, local.kubernetes.registryProjectId]
                                         : [var.project_id]
                                     )
-  add_cluster_firewall_rules      = local.kubernetes.clusterFirewallRulesEnabled
-  enable_private_endpoint         = local.kubernetes.masterPrivateEndpointEnabled
+  add_cluster_firewall_rules      = local.kubernetes.addClusterFirewallRules
+  enable_private_endpoint         = local.kubernetes.enablePrivateEndpoint
   master_global_access_enabled    = local.kubernetes.masterGlobalAccessEnabled
-  enable_private_nodes            = local.kubernetes.privateNodesEnabled
-  network_policy                  = local.kubernetes.networkPolicyEnabled
+  enable_private_nodes            = local.kubernetes.enablePrivateNodes
+  network_policy                  = local.kubernetes.networkPolicy
   # network_policy_provider         = "CALICO"
-  enable_shielded_nodes           = local.kubernetes.shieldedNodesEnabled
+  enable_shielded_nodes           = local.kubernetes.enableShieldedNodes
   # sandbox_enabled                 = local.kubernetes.sandboxEnabled
-  enable_vertical_pod_autoscaling = local.kubernetes.verticalPodAutoscalingEnabled
+  enable_vertical_pod_autoscaling = local.kubernetes.enableVerticalPodAutoscaling
   horizontal_pod_autoscaling      = true
   http_load_balancing             = true
-  dns_cache                       = local.kubernetes.dnsCacheEnabled
-  gce_pd_csi_driver               = local.kubernetes.pdCsiDriverEnabled
+  dns_cache                       = local.kubernetes.dnsCache
+  gce_pd_csi_driver               = local.kubernetes.gcePdCsiDriver
 
-  resource_usage_export_dataset_id   = local.kubernetes.resourceConsumptionExportDatasetId
-  enable_resource_consumption_export = local.kubernetes.resourceConsumptionExportEnabled
-  enable_network_egress_export    = local.kubernetes.networkEgressExportEnabled
-  enable_binary_authorization     = local.kubernetes.binaryAuthorizationEnabled
-  enable_intranode_visibility     = local.kubernetes.intranodeVisibilityEnabled
+  resource_usage_export_dataset_id   = local.kubernetes.resourceUsageExportDatasetId
+  enable_resource_consumption_export = local.kubernetes.enableResourceConsumptionExport
+  enable_network_egress_export    = local.kubernetes.enableNetworkEgressExport
+  enable_binary_authorization     = local.kubernetes.enableBinaryAuthorization
+  enable_intranode_visibility     = local.kubernetes.enableIntranodeVisibility
 
   logging_service                 = "logging.googleapis.com/kubernetes"
   monitoring_service              = "monitoring.googleapis.com/kubernetes"
 
-  config_connector                = local.kubernetes.configConnectorEnabled
+  config_connector                = local.kubernetes.configConnector
 
   # Enable G Suite groups for access control
   authenticator_security_group    = local.kubernetes.authenticatorSecurityGroup
