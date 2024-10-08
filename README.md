@@ -152,6 +152,8 @@ kubernetes:
   region: europe-west1
   regional: false
   zones: [ "europe-west1-b", "europe-west1-c", "europe-west1-d" ]
+
+  masterIpv4CidrBlock: 172.16.0.0/28
   masterAuthorizedNetworks:
     - 0.0.0.0/0
 

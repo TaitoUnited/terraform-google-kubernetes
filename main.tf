@@ -15,12 +15,12 @@
  */
 
 locals {
-  master_ipv4_cidr_block   = "172.16.0.0/28"
-
   kubernetes               = var.kubernetes
   permissions              = var.permissions
   postgresqlClusterNames   = var.use_kubernetes_as_db_proxy ? var.postgresql_cluster_names : []
   mysqlClusterNames        = var.use_kubernetes_as_db_proxy ? var.mysql_cluster_names : []
+
+  master_ipv4_cidr_block   = local.kubernetes.masterIpv4CidrBlock
 
   helmEnabled              = var.helm_enabled
 

@@ -97,7 +97,10 @@ variable "kubernetes" {
     region = string
     regional = bool
     zones = list(string)
+    
     masterAuthorizedNetworks = list(string)
+    masterIpv4CidrBlock = string
+
     nodePools = list(object({
       name = string
       machineType = string
