@@ -58,6 +58,7 @@ module "kubernetes" {
   )["kubernetes"]
 
   # Registry
+  create_registry            = true
   grant_registry_access      = false  # Should be false on the first run, then true
 
   # Helm infrastructure apps

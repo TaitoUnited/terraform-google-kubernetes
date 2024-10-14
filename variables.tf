@@ -51,6 +51,12 @@ variable "services_ip_range_name" {
   description = "Kubernetes ip range services"
 }
 
+variable "create_registry" {
+  type        = bool
+  default     = "true"
+  description = "Creates a container registry."
+}
+
 variable "grant_registry_access" {
   type        = bool
   default     = "false"
