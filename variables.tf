@@ -83,6 +83,7 @@ variable "kubernetes" {
     dbEncryptionEnabled = bool
     enableVerticalPodAutoscaling = bool
     dnsCache = bool
+    gatewayApiChannel = string
     gcePdCsiDriver = bool
     gcsFuseCsiDriver = bool
     filestoreCsiDriver = bool

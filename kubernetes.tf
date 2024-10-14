@@ -80,6 +80,8 @@ module "kubernetes" {
   http_load_balancing             = true
   dns_cache                       = local.kubernetes.dnsCache
 
+  gateway_api_channel             = local.kubernetes.gatewayApiChannel
+
   gce_pd_csi_driver               = local.kubernetes.gcePdCsiDriver
   gcs_fuse_csi_driver             = local.kubernetes.gcsFuseCsiDriver
   filestore_csi_driver            = local.kubernetes.filestoreCsiDriver

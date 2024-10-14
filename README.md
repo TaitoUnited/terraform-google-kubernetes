@@ -138,6 +138,7 @@ kubernetes:
   dbEncryptionEnabled: false
   enableVerticalPodAutoscaling: true
   dnsCache: true
+  gatewayApiChannel: CHANNEL_DISABLED
   gcePdCsiDriver: true
   gcsFuseCsiDriver: false
   filestoreCsiDriver: false
