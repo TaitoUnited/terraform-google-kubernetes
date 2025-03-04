@@ -73,6 +73,7 @@ module "kubernetes" {
   sandbox_enabled                 = local.kubernetes.sandboxEnabled
   security_posture_mode               = local.kubernetes.securityPostureMode
   security_posture_vulnerability_mode = local.kubernetes.securityPostureVulnerabilityMode
+  workload_config_audit_mode          = local.kubernetes.workloadConfigAuditMode
   workload_vulnerability_mode         = local.kubernetes.workloadVulnerabilityMode
 
   enable_vertical_pod_autoscaling = local.kubernetes.enableVerticalPodAutoscaling

@@ -81,6 +81,7 @@ variable "kubernetes" {
     sandboxEnabled = bool
     securityPostureMode = string
     securityPostureVulnerabilityMode = string
+    workloadConfigAuditMode = string
     workloadVulnerabilityMode = string
     networkPolicy = bool
     enableFqdnNetworkPolicy = bool

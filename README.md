@@ -131,6 +131,7 @@ kubernetes:
   sandboxEnabled: false
   securityPostureMode: DISABLED
   securityPostureVulnerabilityMode: VULNERABILITY_DISABLED
+  workloadConfigAuditMode: DISABLED
   workloadVulnerabilityMode: DISABLED
   networkPolicy: false
   enableFqdnNetworkPolicy: false
