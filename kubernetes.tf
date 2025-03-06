@@ -88,6 +88,7 @@ module "kubernetes" {
   filestore_csi_driver            = local.kubernetes.filestoreCsiDriver
 
   resource_usage_export_dataset_id   = local.kubernetes.resourceUsageExportDatasetId
+  enable_cost_allocation             = local.kubernetes.enableCostAllocation
   enable_resource_consumption_export = local.kubernetes.enableResourceConsumptionExport
   enable_network_egress_export    = local.kubernetes.enableNetworkEgressExport
   enable_binary_authorization     = local.kubernetes.enableBinaryAuthorization

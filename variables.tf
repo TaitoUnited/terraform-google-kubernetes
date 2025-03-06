@@ -94,6 +94,7 @@ variable "kubernetes" {
     gcePdCsiDriver = bool
     gcsFuseCsiDriver = bool
     filestoreCsiDriver = bool
+    enableCostAllocation = bool
     enableResourceConsumptionExport = bool
     resourceUsageExportDatasetId = string
     enableNetworkEgressExport = bool

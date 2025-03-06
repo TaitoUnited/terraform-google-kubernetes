@@ -144,6 +144,7 @@ kubernetes:
   gcePdCsiDriver: true
   gcsFuseCsiDriver: false
   filestoreCsiDriver: false
+  enableCostAllocation: true
   enableResourceConsumptionExport: false
   resourceUsageExportDatasetId: ""
   enableNetworkEgressExport: false
