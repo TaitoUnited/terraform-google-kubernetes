@@ -94,8 +94,14 @@ module "kubernetes" {
   enable_binary_authorization     = local.kubernetes.enableBinaryAuthorization
   enable_intranode_visibility     = local.kubernetes.enableIntranodeVisibility
 
+  # TODO: make configurable
   logging_service                 = "logging.googleapis.com/kubernetes"
+  logging_enabled_components      = ["SYSTEM_COMPONENTS", "WORKLOADS"]
+
+  # TODO: make configurable
   monitoring_service              = "monitoring.googleapis.com/kubernetes"
+  monitoring_enabled_components   = ["SYSTEM_COMPONENTS", "POD", "DCGM"]
+
   monitoring_enable_managed_prometheus = local.kubernetes.monitoringEnableManagedPrometheus
 
   config_connector                = local.kubernetes.configConnector
