@@ -125,6 +125,9 @@ module "kubernetes" {
   remove_default_node_pool  = true
   # initial_node_count        = 1
 
+  service_external_ips      = false
+  insecure_kubelet_readonly_port_enabled = false
+
   node_pools = [
     for nodePool in local.kubernetes.nodePools:
     {
@@ -153,6 +156,8 @@ module "kubernetes" {
 
       enable_secure_boot    = nodePool.secureBootEnabled
       enable_integrity_monitoring = true
+
+      insecure_kubelet_readonly_port_enabled = false
     }
   ]
 
