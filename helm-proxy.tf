@@ -26,6 +26,7 @@ data "google_sql_database_instance" "mysql" {
   name       = each.value
 }
 
+/* TODO: enable keepalive for socat? */
 resource "helm_release" "postgres_proxy" {
   depends_on = [module.kubernetes, module.helm_apps]
 
@@ -38,17 +39,19 @@ resource "helm_release" "postgres_proxy" {
   version    = var.socat_tunneler_version
   wait       = false
 
-  set {
-    name  = "tunnel.host"
-    value = data.google_sql_database_instance.postgresql[each.key].private_ip_address
-  }
-
-  set {
-    name  = "tunnel.port"
-    value = 5432
-  }
+  set = [
+    {
+      name  = "tunnel.host"
+      value = data.google_sql_database_instance.postgresql[each.key].private_ip_address
+    },
+    {
+      name  = "tunnel.port"
+      value = 5432
+    }
+  ]
 }
 
+/* TODO: enable keepalive for socat? */
 resource "helm_release" "mysql_proxy" {
   depends_on = [module.kubernetes, helm_release.postgres_proxy]
 
@@ -60,13 +63,14 @@ resource "helm_release" "mysql_proxy" {
   version    = var.socat_tunneler_version
   wait       = false
 
-  set {
-    name  = "tunnel.host"
-    value = data.google_sql_database_instance.mysql[each.key].private_ip_address
-  }
-
-  set {
-    name  = "tunnel.port"
-    value = 3306
-  }
+  set = [
+    {
+      name  = "tunnel.host"
+      value = data.google_sql_database_instance.mysql[each.key].private_ip_address
+    },
+    {
+      name  = "tunnel.port"
+      value = 3306
+    }
+  ]
 }

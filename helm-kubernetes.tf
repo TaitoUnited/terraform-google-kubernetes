@@ -35,8 +35,10 @@ resource "helm_release" "kubernetes_admin" {
     })
   ]
 
-  set {
-    name     = "provider"
-    value    = "gcp"
-  }
+  set = [
+    {
+      name     = "provider"
+      value    = "gcp"
+    }
+  ]
 }

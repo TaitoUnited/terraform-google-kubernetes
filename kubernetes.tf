@@ -16,7 +16,7 @@
 
 module "kubernetes" {
   source  = "terraform-google-modules/kubernetes-engine/google//modules/beta-private-cluster"
-  version = "36.0.2"
+  version = "44.2.0"
 
   deletion_protection            = true
 
