@@ -16,9 +16,16 @@
 
 /* Static IP address for Kubernetes ingress load balancer */
 
-resource "google_compute_address" "kubernetes_ingress" {
-  for_each    = {for item in local.ingressNginxControllers: item.name => item}
-  project     = var.project_id
-  name        = "${local.kubernetes.name}-${each.value.name}"
-  description = "Kubernetes ingress public static IP address"
+resource "google_compute_global_address" "gateway" {
+  name = "${local.kubernetes.name}-gateway"
+}
+
+resource "google_certificate_manager_certificate_map" "gateway_map" {
+  name     = "${local.kubernetes.name}-gateway"
+}
+
+resource "google_compute_ssl_policy" "gateway" {
+  name            = "${local.kubernetes.name}-gateway"
+  profile         = "MODERN"
+  min_tls_version = "TLS_1_2"
 }

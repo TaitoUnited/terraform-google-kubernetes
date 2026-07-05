@@ -121,19 +121,6 @@ variable "kubernetes" {
       minNodeCount = number
       maxNodeCount = number
     }))
-    ingressNginxControllers = list(object({
-      name = string
-      class = string
-      replicas = number
-      metricsEnabled = bool
-      maxmindLicenseKey = string
-      configMap = map(string)
-      tcpServices = map(string)
-      udpServices = map(string)
-    }))
-    certManager = object({
-      enabled = bool
-    })
   })
   description = "Resources as JSON (see README.md). You can read values from a YAML file with yamldecode()."
 }
@@ -187,26 +174,18 @@ variable "mysql_cluster_names" {
 
 # Helm app versions
 
-# NOTE: Remember to update also helm_apps.tf
-# TODO: Should be optional and null by default
-variable "ingress_nginx_version" {
-  type        = string
-  default     = "4.15.1"
-}
-
-# NOTE: Remember to update also helm_apps.tf
-# TODO: Should be optional and null by default
-variable "cert_manager_version" {
-  type        = string
-  default     = "1.20.3"
-}
-
 variable "kubernetes_admin_version" {
   type        = string
-  default     = "1.14.0"
+  default     = "1.15.0"
 }
 
 variable "socat_tunneler_version" {
   type        = string
   default     = "0.2.0"
+}
+
+# Gateway settings
+
+variable "gateway_security_policy" {
+  type        = string
 }

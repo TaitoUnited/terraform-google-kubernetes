@@ -39,6 +39,22 @@ resource "helm_release" "kubernetes_admin" {
     {
       name     = "provider"
       value    = "gcp"
+    },
+    {
+      name     = "gateway.namedAddress"
+      value    = google_compute_global_address.gateway.name
+    },
+    {
+      name     = "gateway.certMap"
+      value    = google_certificate_manager_certificate_map.gateway_map.name
+    },
+    {
+      name     = "gateway.sslPolicy"
+      value    = google_compute_ssl_policy.gateway.name
+    },
+    {
+      name     = "gateway.securityPolicy"
+      value    = var.gateway_security_policy
     }
   ]
 }

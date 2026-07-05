@@ -29,10 +29,4 @@ locals {
     ? local.kubernetes.nodePools
     : []
   )
-
-  ingressNginxControllers = (
-    local.kubernetes.ingressNginxControllers != null
-    ? local.kubernetes.ingressNginxControllers
-    : []
-  )
 }

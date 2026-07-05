@@ -28,7 +28,7 @@ data "google_sql_database_instance" "mysql" {
 
 /* TODO: enable keepalive for socat? */
 resource "helm_release" "postgres_proxy" {
-  depends_on = [module.kubernetes, module.helm_apps]
+  depends_on = [module.kubernetes]
 
   for_each   = {for item in (local.helmEnabled ? local.postgresqlClusterNames : []): item => item}
   name       = each.value
