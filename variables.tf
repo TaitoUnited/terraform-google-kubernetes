@@ -176,16 +176,10 @@ variable "mysql_cluster_names" {
 
 variable "kubernetes_admin_version" {
   type        = string
-  default     = "1.15.0"
+  default     = "1.16.0"
 }
 
 variable "socat_tunneler_version" {
   type        = string
   default     = "0.2.0"
-}
-
-# Gateway settings
-
-variable "gateway_security_policy" {
-  type        = string
 }

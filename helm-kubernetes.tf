@@ -51,10 +51,6 @@ resource "helm_release" "kubernetes_admin" {
     {
       name     = "gateway.sslPolicy"
       value    = google_compute_ssl_policy.gateway.name
-    },
-    {
-      name     = "gateway.securityPolicy"
-      value    = var.gateway_security_policy
     }
   ]
 }
